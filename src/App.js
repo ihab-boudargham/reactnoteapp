@@ -4,10 +4,14 @@ import React, { useState, useEffect } from "react";
 
 const App = () => {
 
+  // Load notes from local storage on component mount
+  useEffect(() => {
+    const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    setNotes(storedNotes);
+  }, []);
   // Dummy Notes
 
   const [notes,setNotes] = useState([])
-  const [loading, setLoading] = useState(true);
 
   // Add Notes
   const [title, setTitle] = useState("")
@@ -15,14 +19,6 @@ const App = () => {
   const [priority, setPriority] = useState("");
   const [filter, setFilter] = useState("all");
   const [category, setCategory] = useState("");
-
-  useEffect(() => {
-    const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
-    console.log("Notes loaded:", storedNotes);
-    setNotes(storedNotes);
-    setLoading(false);
-  }, []);
-
 
   const handleAddNotes = (event) => {
     event.preventDefault();
@@ -35,7 +31,10 @@ const App = () => {
       category:category,
     }
 
-    setNotes([newNote,...notes])
+    const updatedNotes = [newNote, ...notes];
+    setNotes(updatedNotes);
+    saveNotesToLocalStorage(updatedNotes);
+
     setTitle("")
     setContent("")
     setPriority("");
@@ -73,6 +72,7 @@ const App = () => {
 
     const updatedNotesList = notes.map((note)=>(note.id === selectedNotes.id ? updateNote : note))
     setNotes(updatedNotesList);
+    saveNotesToLocalStorage(updatedNotesList); 
     setTitle("");
     setContent("");
     setPriority("");
@@ -114,6 +114,13 @@ const App = () => {
 
   const filteredNotes =
   filter === "all" ? notes : notes.filter((note) => note.priority === filter);
+
+
+  // Save notes to local storage
+  const saveNotesToLocalStorage = (notes) => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  };
+
 
   return (
     <div className="app-container">
@@ -205,10 +212,6 @@ const App = () => {
         )}
       </form>
 
-      {loading ? (
-        <p>Loading...</p> // Display a loading message while notes are being loaded
-      ) : (
-
       <div className="notes-grid">
         {filteredNotes.map((note) => (
           <div
@@ -227,7 +230,6 @@ const App = () => {
           </div>
         ))}
       </div>
-      )}
     </div>
   );
 };
