@@ -140,3 +140,8 @@ input {
   background-color: rgba(255, 0, 0, 0.8); 
 }
 
+.validation-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 8px;
+}

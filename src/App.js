@@ -20,9 +20,49 @@ const App = () => {
   const [filter, setFilter] = useState("all");
   const [category, setCategory] = useState("");
 
+  // Validation error messages
+  const [titleError, setTitleError] = useState("");
+  const [contentError, setContentError] = useState("");
+  const [priorityError, setPriorityError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
+
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
+
   const handleAddNotes = (event) => {
     event.preventDefault();
 
+    setFormSubmitted(true);
+
+    // Validation
+    if (!title) {
+      setTitleError("Please fill in the title.");
+      return;
+    } else {
+      setTitleError("");
+    }
+
+    if (!content) {
+      setContentError("Please fill in the content.");
+      return;
+    } else {
+      setContentError("");
+    }
+
+    if (!priority) {
+      setPriorityError("Please select a priority.");
+      return;
+    } else {
+      setPriorityError("");
+    }
+
+    if (!category) {
+      setCategoryError("Please select a category.");
+      return;
+    } else {
+      setCategoryError("");
+    }
+    
     const newNote = {
       id: notes.length +1,
       title: title,
@@ -34,6 +74,9 @@ const App = () => {
     const updatedNotes = [newNote, ...notes];
     setNotes(updatedNotes);
     saveNotesToLocalStorage(updatedNotes);
+
+    // Reset formSubmitted state after submission
+    setFormSubmitted(false);
 
     setTitle("")
     setContent("")
@@ -62,6 +105,37 @@ const App = () => {
       return;
     }
 
+    setFormSubmitted(true);
+
+    // Validation
+    if (!title) {
+      setTitleError("Please fill in the title.");
+      return;
+    } else {
+      setTitleError("");
+    }
+
+    if (!content) {
+      setContentError("Please fill in the content.");
+      return;
+    } else {
+      setContentError("");
+    }
+
+    if (!priority) {
+      setPriorityError("Please select a priority.");
+      return;
+    } else {
+      setPriorityError("");
+    }
+
+    if (!category) {
+      setCategoryError("Please select a category.");
+      return;
+    } else {
+      setCategoryError("");
+    }
+
     const updateNote = {
       id: selectedNotes.id ,
       title: title,
@@ -73,6 +147,8 @@ const App = () => {
     const updatedNotesList = notes.map((note)=>(note.id === selectedNotes.id ? updateNote : note))
     setNotes(updatedNotesList);
     saveNotesToLocalStorage(updatedNotesList); 
+
+    setFormSubmitted(false);
     setTitle("");
     setContent("");
     setPriority("");
@@ -141,12 +217,17 @@ const App = () => {
             </select>
           </div>
 
+        
+        {/* Validation messages */}
+        {formSubmitted && <div className="validation-message">{titleError}</div>}
         <input 
         placeholder="Title" 
         required
         value = {title}
         onChange={(e) => setTitle(e.target.value)}
          />
+
+        {formSubmitted && <div className="validation-message">{contentError}</div>}
         <textarea 
         placeholder="Content" 
         rows={10} 
@@ -154,6 +235,8 @@ const App = () => {
         value = {content}
         onChange={(e) => setContent(e.target.value)}
         />
+
+        {formSubmitted && <div className="validation-message">{priorityError}</div>}
         <div className='flex justify-between'>
           <label>
             <input
@@ -187,6 +270,7 @@ const App = () => {
           </label>
         </div>
 
+        {formSubmitted && <div className="validation-message">{categoryError}</div>}
         <label>
           <span className='mr-2'>Category :</span>
           <select
@@ -210,6 +294,8 @@ const App = () => {
         ) : (
           <button type="submit">Add Note</button>
         )}
+
+
       </form>
 
       <div className="notes-grid">
@@ -233,6 +319,5 @@ const App = () => {
     </div>
   );
 };
-
 
 export default App;
