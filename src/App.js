@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 
 
 const App = () => {
@@ -290,11 +290,20 @@ const App = () => {
 
         {selectedNotes ? (
           <div className="edit-buttons">
-            <button type="submit">Save</button>
-            <button onClick={handleCancel}>Cancel</button>
+            <button type="submit">
+              <FontAwesomeIcon icon={faSave} style={{ marginRight: '5px' }} />
+              Save
+            </button>
+            <button onClick={handleCancel}>
+              <FontAwesomeIcon icon={faTimes} style={{ marginRight: '5px' }} />
+              Cancel
+            </button>
           </div>
         ) : (
-          <button type="submit">Add Note</button>
+          <button type="submit">
+            <FontAwesomeIcon icon={faPlus} style={{ marginRight: '5px' }} />
+            Add Note
+          </button>
         )}
 
 

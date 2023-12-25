@@ -100,10 +100,11 @@ input {
 
 .note-form button {
   border-radius: 8px;
-  background-color: #4CAF50;
+  background-color: #00d307d6;
   border: none;
-  padding: 15px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
@@ -124,7 +125,7 @@ input {
 }
 
 .edit-buttons button:last-of-type {
-  background-color: #d9534f;
+  background-color: #ff0800cf;
   color: white;
 }
 
