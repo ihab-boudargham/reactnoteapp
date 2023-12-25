@@ -1,5 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 const App = () => {
@@ -305,7 +307,9 @@ const App = () => {
             onClick={() => handleNoteClick(note)}
           >
             <div className="notes-header" type="click">
-              <button onClick={(e) => handleDeleteNote(e, note.id)}>x</button>
+            <button onClick={(e) => handleDeleteNote(e, note.id)}>
+              <FontAwesomeIcon icon={faTimes} style={{ marginRight: '5px' }} />
+            </button>
             </div>
             <h2>{note.title}</h2>
             <div className='flex justify-around'>
